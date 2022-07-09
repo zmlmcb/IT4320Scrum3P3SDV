@@ -1,0 +1,27 @@
+def stocksymbolGet:
+
+    #get user input
+
+    # validate user input
+
+    #return user input as string
+    return userinput
+
+
+main:
+
+    while 1:
+        sotcksymbol = stocksymbolGet()
+        charttype = charttypeget()
+        timeseries = timeseriesGet()
+
+        #etc...
+        apicall(sotcksymbol, charttype, timeseries)
+
+
+        #continue y/n prompt
+        input("quit y/n?")
+        if y:
+            break
+        else:
+            continue

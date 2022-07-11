@@ -20,6 +20,18 @@ def api_call(ss, ct, ts, bd, ed):
 
     print(data)
 
+# exit_prompt
+def exit_prompt():
+    x = input("\nWould you like to view more stock data? Enter 'y' to continue, or 'n' to exit:   ")
+    if x == 'n':
+        print("Thank you and Goodbye!\n")
+        return 0
+    elif x == 'y':
+        return 1
+    else:
+        print("Invalid Value: please pick either 'y' or 'n'")
+        exit_prompt()
+
 
 if __name__ == "__main__":
 
@@ -31,8 +43,6 @@ if __name__ == "__main__":
         end_date = "1994-08-31'"
 
         api_call(stock_symbol, chart_type, time_series, begin_date, end_date)
-        x = input("WOuld you like to view more stock data? Enter 'y' to continue, or 'n' to exit:   ")
-        if x == 'n':
-            print("Thank you and Goodbye!\n")
+        if exit_prompt() == 0:
             break
 

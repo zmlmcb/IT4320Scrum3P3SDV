@@ -13,7 +13,7 @@ main:
     while 1:
         sotcksymbol = stocksymbolGet()
         charttype = charttypeget()
-        timeseries = timeseriesGet()
+        timeseries = timese
 
         #etc...
         apicall(sotcksymbol, charttype, timeseries)

@@ -2,6 +2,15 @@
 import requests
 
 
+def retrieve_date_range(data, bd, ed):
+    data_ranged = data
+    return data_ranged
+
+
+def graph_json_data(data, ct, bd, ed):
+    data_range = retrieve_date_range(data, bd, ed)
+
+
 def api_call(ss, ct, ts, bd, ed):
     tsf = ""
     interval_value = ''
@@ -23,7 +32,7 @@ def api_call(ss, ct, ts, bd, ed):
         print("There was an error in your request, please try again.")
         return 1
 
-    print(data)
+
     return 0
 
 

@@ -22,7 +22,7 @@ def graph_data(data, ss, ts, ct, bd, ed):
     else:
         chart = pygal.Bar(x_label_rotation=20, show_minor_x_labels=False, logarithmic=True)
     if ts == "1":
-        chart.title = "Stock Data for " + ss + " for the last two months"
+        chart.title = "Stock Data for " + ss + ": Intraday values for last 100 hours"
     else:
         chart.title = "Stock Data for " + ss + ": " + str(bd) + " to " + str(ed)
     data_list = data.index.tolist()
@@ -92,12 +92,12 @@ if __name__ == "__main__":
     while 1:
         stock_symbol = "GOOGL"
         chart_type = "2"
-        time_series = "3"
+        time_series = "1"
         if time_series != "1":
             begin_date = datetime.date(2020, 8, 1)
             end_date = datetime.date(2020, 10, 31)
         else:
-            print('intraday does not support a specified date range, the last two months of intraday values will be'
+            print('intraday does not support a specified date range, the last 100 hours of intraday values will be'
                   ' displayed')
             begin_date = 0
             end_date = 0

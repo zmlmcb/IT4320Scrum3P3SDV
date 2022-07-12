@@ -4,7 +4,7 @@ def getEndDate():
 
     try:
 
-        inputEndDate = input("Please enter the end date of the data in YYYY-MM-DD format: ")
+        inputEndDate = input("Enter the end date (YYYY-MM-DD) ")
 
         endDate = datetime.datetime.strptime(endingDate, "%Y-%m-%d").date()
 
@@ -12,7 +12,8 @@ def getEndDate():
 
             if endDate <= begin_date:
 
-                print("The ending date must not be before the beginning date.")
+                print("Error: Start date cannot be later than end date. Please enter the dates again.")
+                print("")
 
     else:
     

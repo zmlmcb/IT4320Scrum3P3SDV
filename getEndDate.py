@@ -6,7 +6,7 @@ def getEndDate():
 
         inputEndDate = input("Enter the end date (YYYY-MM-DD) ")
 
-        endDate = datetime.datetime.strptime(endingDate, "%Y-%m-%d").date()
+        endDate = datetime.datetime.strptime(inputEndDate, "%Y-%m-%d").date()
 
     except DateError:
 

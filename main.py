@@ -1,6 +1,7 @@
 # api_call
 import json
 
+import pygal
 import requests
 import datetime
 import pandas as pd
@@ -14,16 +15,38 @@ def retrieve_date_range(data, bd, ed):
         return data_ranged
 
 
-def graph_data(data, ct, bd, ed):
+def graph_data(data, ss, ts, ct, bd, ed):
     data = retrieve_date_range(data, bd, ed)
-    print(data)
+    if ct == "1":
+        chart = pygal.Line(x_label_rotation=20, show_minor_x_labels=False)
+    else:
+        chart = pygal.Bar(x_label_rotation=20, show_minor_x_labels=False, logarithmic=True)
+    if ts == "1":
+        chart.title = "Stock Data for " + ss + " for the last two months"
+    else:
+        chart.title = "Stock Data for " + ss + ": " + str(bd) + " to " + str(ed)
+    data_list = data.index.tolist()
+    chart.x_labels = data_list
+    if len(data_list) > 25:
+        n = 5
+        chart.x_labels_major = data_list[::n]
+    else:
+        n = 1
+        chart.x_labels_major = data_list[::n]
+
+    chart.add('Open', data.loc[:, "1. open"].values)
+    chart.add('High', data.loc[:, "2. high"].values)
+    chart.add('Low', data.loc[:, "3. low"].values)
+    chart.add('Close', data.loc[:, "4. close"].values)
+
+    chart.render_in_browser()
 
 
 def api_call(ss, ct, ts, bd, ed):
     if ts == "1":
         url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + ss + \
-              '&interval=5min&outputsize=compact&apikey=2C4AFL520Q27QCZ9'
-        record_path = "Time Series (5min)"
+              '&interval=60min&outputsize=compact&apikey=2C4AFL520Q27QCZ9'
+        record_path = "Time Series (60min)"
     elif ts == "2":
         url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + ss + \
               '&outputsize=full&apikey=2C4AFL520Q27QCZ9'
@@ -34,7 +57,6 @@ def api_call(ss, ct, ts, bd, ed):
     else:
         url = 'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=' + ss + '&apikey=2C4AFL520Q27QCZ9'
         record_path = "Monthly Time Series"
-    print(url)
     r = requests.get(url)
     data = r.json()
 
@@ -47,7 +69,7 @@ def api_call(ss, ct, ts, bd, ed):
     data_df = data_df.T
     data_df.sort_index(inplace=True, ascending=True)
 
-    graph_data(data_df, ct, bd, ed)
+    graph_data(data_df, ss, ts, ct, bd, ed)
 
     return 0
 
@@ -70,7 +92,7 @@ if __name__ == "__main__":
     while 1:
         stock_symbol = "GOOGL"
         chart_type = "2"
-        time_series = "1"
+        time_series = "3"
         if time_series != "1":
             begin_date = datetime.date(2020, 8, 1)
             end_date = datetime.date(2020, 10, 31)

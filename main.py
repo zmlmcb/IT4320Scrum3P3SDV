@@ -61,8 +61,8 @@ def api_call(ss, ct, ts, bd, ed):
     data = r.json()
 
     if 'Error Message' in data:
-        print("There was an error in your request, please try again.")
-        return 1
+        print("\nThere was an error in your request, please try again.")
+        return
 
     json_str = json.dumps(data[record_path])
     data_df = pd.read_json(json_str)
@@ -71,7 +71,7 @@ def api_call(ss, ct, ts, bd, ed):
 
     graph_data(data_df, ss, ts, ct, bd, ed)
 
-    return 0
+    return
 
 
 # exit_prompt
@@ -90,7 +90,7 @@ def exit_prompt():
 if __name__ == "__main__":
 
     while 1:
-        stock_symbol = "GOOGL"
+        stock_symbol = "GGL"
         chart_type = "2"
         time_series = "1"
         if time_series != "1":
@@ -102,13 +102,9 @@ if __name__ == "__main__":
             begin_date = 0
             end_date = 0
 
-        ec = api_call(stock_symbol, chart_type, time_series, begin_date, end_date)
-        if ec == 0:
-            if exit_prompt() == 0:
-                break
-        else:
-            print("This is a testing point, normally loop but dont want to lock")
-            if exit_prompt() == 0:
-                break
+        api_call(stock_symbol, chart_type, time_series, begin_date, end_date)
+
+        if exit_prompt() == 0:
+            break
 
 

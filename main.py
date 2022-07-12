@@ -12,26 +12,22 @@ def graph_json_data(data, ct, bd, ed):
 
 
 def api_call(ss, ct, ts, bd, ed):
-    tsf = ""
-    interval_value = ''
     if ts == "1":
-        tsf = "TIME_SERIES_INTRADAY"
-        interval_value = 'interval=5min'
+        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + ss + \
+              '&interval=5min&apikey=2C4AFL520Q27QCZ9'
     elif ts == "2":
-        tsf = "TIME_SERIES_DAILY"
-    elif ts == "4":
-        tsf = "TIME_SERIES_WEEKLY"
+        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + ss + \
+              '&outputsize=full&apikey=2C4AFL520Q27QCZ9'
+    elif ts == "3":
+        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_WEEKLY&symbol=' + ss + '&apikey=2C4AFL520Q27QCZ9'
     else:
-        tsf = "TIME_SERIES_MONTHLY"
-    url = 'https://www.alphavantage.co/query?function=' + tsf + '&symbol=' + ss + '&' + interval_value \
-          + '&apikey=2C4AFL520Q27QCZ9'
+        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=' + ss + '&apikey=2C4AFL520Q27QCZ9'
     print(url)
     r = requests.get(url)
     data = r.json()
-    if 'Error Message'in data :
+    if 'Error Message' in data:
         print("There was an error in your request, please try again.")
         return 1
-
 
     return 0
 
@@ -52,9 +48,9 @@ def exit_prompt():
 if __name__ == "__main__":
 
     while 1:
-        stock_symbol = "Googl"
+        stock_symbol = "GOOGL"
         chart_type = "2"
-        time_series = "1"
+        time_series = "2"
         begin_date = "1994-08-01"
         end_date = "1994-08-31'"
 

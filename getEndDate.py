@@ -8,7 +8,7 @@ def getEndDate():
 
         endDate = datetime.datetime.strptime(inputEndDate, "%Y-%m-%d").date()
 
-    except DateError:
+    except:
 
             if endDate <= begin_date:
 

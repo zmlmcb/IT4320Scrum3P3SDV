@@ -4,21 +4,23 @@ import pygal
 import requests
 import datetime
 import pandas as pd
+from getStockSymbol import getStockSymbol
 
 
 def get_stock_symbol():
-    return "googl"
+    return getStockSymbol()
 
 
 # Noah's chart function
 def get_chart_type(inp):
-    if(inp == "1"):
+    if inp == "1":
         return "1"
-    elif(inp == "2"):
+    elif inp == "2":
         return "2"
     else:
         return "0"
-    
+
+
 def get_time_series():
     return"1"
 
@@ -204,7 +206,7 @@ if __name__ == "__main__":
         stock_symbol = get_stock_symbol()
         # Noah's chart function is called
         chart_type = get_chart_type(input("Enter the chart type you want (1, 2): "))
-        while (chart_type == "0"):
+        while chart_type == "0":
             chart_type = get_chart_type(input("Please enter the chart type you want (1, 2): "))
         time_series = get_time_series()
         # depending on time series begin date and end date will differ

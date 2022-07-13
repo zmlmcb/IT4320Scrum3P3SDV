@@ -4,10 +4,11 @@ import pygal
 import requests
 import datetime
 import pandas as pd
+from getStockSymbol import getStockSymbol
 
 
 def get_stock_symbol():
-    return "googl"
+    return getStockSymbol()
 
 
 # Noah's chart function

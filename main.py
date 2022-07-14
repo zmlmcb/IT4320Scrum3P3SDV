@@ -5,10 +5,7 @@ import requests
 import datetime
 import pandas as pd
 from getStockSymbol import getStockSymbol
-
-
-def get_stock_symbol():
-    return getStockSymbol()
+from getEndDate import getEndDate
 
 
 # Noah's chart function
@@ -22,15 +19,11 @@ def get_chart_type(inp):
 
 
 def get_time_series():
-    return"1"
+    return"2"
 
 
 def get_beginning_date():
     return datetime.date(2020, 8, 1)
-
-
-def get_end_date(beginning_date):
-    return datetime.date(2020, 10, 31)
 
 
 # json_to_dataframe()
@@ -203,7 +196,7 @@ if __name__ == "__main__":
     # the wish to continue after each call. if user indicates they wish to stop, break out of loop and end program
     while 1:
         # get user inputs for stock symbol, chart type, and time series
-        stock_symbol = get_stock_symbol()
+        stock_symbol = getStockSymbol()
         # Noah's chart function is called
         chart_type = get_chart_type(input("Enter the chart type you want (1, 2): "))
         while chart_type == "0":
@@ -213,7 +206,7 @@ if __name__ == "__main__":
         if time_series != "1":
             # for anything other than "1" (intraday), prompt user for date range
             begin_date = get_beginning_date()
-            end_date = get_end_date(begin_date)
+            end_date = getEndDate(begin_date)
         else:
             # if time series is "1" then intraday was chosen, intraday timeseries does not allow for a specified
             # date range, begin_date and end_date are set to integer 0 to show this.

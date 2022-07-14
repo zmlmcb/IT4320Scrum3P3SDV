@@ -17,4 +17,4 @@ def getEndDate(begin_date):
     else:
         return endDate
 
-getEndDate(datetime.date(2020, 8, 1))
+# getEndDate(datetime.date(2020, 8, 1))

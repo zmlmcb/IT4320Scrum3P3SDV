@@ -19,4 +19,4 @@ def getStockSymbol():
     return userInput
 
 
-getStockSymbol()
+# getStockSymbol()

@@ -1,0 +1,31 @@
+def menu():
+    print("Select the time Series of the chart you want to generate")
+    print("--------------------------------------------------------")
+    print("1.Intraday")
+    print("2.Daily")
+    print("3.Weekly")
+    print("4.Monthly\n")
+    
+menu()
+
+choice = input("Enter time series option(1,2,3,4):")
+
+choice =int(choice)
+
+if choice ==1:
+    dates = input("Enter the start Date (YYYY-MM-DD)")
+    month = input("Enter the end Date (YYYY-MM-DD)")   
+   
+elif choice ==2:
+    dates = input("Enter the start Date (YYYY-MM-DD)")
+    month = input("Enter the end Date (YYYY-MM-DD)")
+
+elif choice ==3:
+    dates = input("Enter the start Date (YYYY-MM-DD)")
+    month = input("Enter the end Date (YYYY-MM-DD)")
+
+elif choice ==4:
+    dates = input("Enter the start Date (YYYY-MM-DD)")
+    month = input("Enter the end Date (YYYY-MM-DD)")
+
+

@@ -13,10 +13,8 @@ def get_stock_symbol():
 # Noah's chart function
 def get_chart_type():
     ct = input("\nEnter the chart type you want (1, 2): ")
-    if ct == "1":
-        return "1"
-    elif ct == "2":
-        return "2"
+    if ct == "1" or ct == "2":
+        return ct
     else:
         print("Error: Please choose from one of the provided options")
         return get_chart_type()

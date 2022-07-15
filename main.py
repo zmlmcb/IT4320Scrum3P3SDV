@@ -11,12 +11,13 @@ def getStockSymbol():
     while True:
 
         SpecialCharacters = False
-        userInput = input("\nInput a valid stock symbol: ")
+        userInput = input("Input a valid stock symbol: ")
         if 0 < len(userInput) <= 5:  #checks if user inputs a string between 1 and 5 characters
             for letter in userInput:
                 if not letter.isdigit() and not letter.isalpha(): #checks if letter isn't a number or a letter
                     SpecialCharacters = True
-                    print("please input a symbol with no special characters")
+                    print("please input a symbol with no special characters\n")
+                    break
             if not SpecialCharacters:
                 break
         else:
@@ -36,6 +37,46 @@ def get_chart_type(inp):
 
 
 def get_time_series():
+    # Moved this to a single line to print too save space and reduced calls to print, moved to main so return call
+    # doesnt continuasly print
+    #     print("Select the time Series of the chart you want to generate")
+    #     print("--------------------------------------------------------")
+    #     print("1.Intraday")
+    #     print("2.Daily")
+    #     print("3.Weekly")
+    #     print("4.Monthly\n")
+
+    # moved prints from seperate function into a single one
+    # menu()
+
+    choice = input("Enter time series option(1,2,3,4): ")
+    # validate data to make sure it is one of the options given
+    if choice == "1" or choice == "2" or choice == "3" or choice == "4":
+        return choice
+    else:
+        print("Error: please choose from one of the provided options.")
+        return get_time_series()
+
+    # no need to cast it too an int, main is expecting an int. technically python will do this autmatically but it is
+    # unnecessary
+    # choice = int(choice)
+
+    # the dates are going to be done in a separate function and are not need in this one.
+    # if choice == 1:
+    #     dates = input("Enter the start Date (YYYY-MM-DD)")
+    #     month = input("Enter the end Date (YYYY-MM-DD)")
+    #
+    # elif choice == 2:
+    #     dates = input("Enter the start Date (YYYY-MM-DD)")
+    #     month = input("Enter the end Date (YYYY-MM-DD)")
+    #
+    # elif choice == 3:
+    #     dates = input("Enter the start Date (YYYY-MM-DD)")
+    #     month = input("Enter the end Date (YYYY-MM-DD)")
+    #
+    # elif choice == 4:
+    #     dates = input("Enter the start Date (YYYY-MM-DD)")
+    #     month = input("Enter the end Date (YYYY-MM-DD)")
     return"2"
 
 
@@ -51,7 +92,7 @@ def get_beginning_date():
 
 
 def getEndDate(begin_date):
-    inputEndDate = input("\nWhat is the end date of the data you want? (Use YYYY-MM-DD format): ")
+    inputEndDate = input("What is the end date of the data you want? (Use YYYY-MM-DD format): ")
     try:
         endDate = datetime.datetime.strptime(inputEndDate, "%Y-%m-%d").date()
     except:
@@ -217,7 +258,7 @@ def api_call(ss, ct, ts, bd, ed):
 #   Zac Lipperd - ZMLMCB
 def exit_prompt():
     # prompt user for y or n
-    x = input("\nWould you like to view more stock data? Enter 'y' to continue, or 'n' to exit:   ")
+    x = input("Would you like to view more stock data? Enter 'y' to continue, or 'n' to exit:   ")
     if x == 'n':
         print("Thank you and Goodbye!\n")
         return 0
@@ -238,7 +279,7 @@ if __name__ == "__main__":
     # the wish to continue after each call. if user indicates they wish to stop, break out of loop and end program
     while 1:
         print("===================================\n"
-              "Enter the stock symbol you are looking for")
+              "\nEnter the stock symbol you are looking for")
         # get user inputs for stock symbol, chart type, and time series
         stock_symbol = getStockSymbol()
         # Noah's chart function is called
@@ -246,7 +287,10 @@ if __name__ == "__main__":
                                           "1.  Bar\n2.  Line\n\nEnter the chart type you want (1, 2): "))
         while chart_type == "0":
             chart_type = get_chart_type(input("Please enter the chart type you want (1, 2): "))
+        print("\nSelect the time Series of the chart you want to generate\n===================================\n"
+              "1. Intraday\n2. Daily\n3. Weekly\n4. Monthly\n")
         time_series = get_time_series()
+        print('===================================\n')
         # depending on time series begin date and end date will differ
         if time_series != "1":
             # for anything other than "1" (intraday), prompt user for date range

@@ -4,8 +4,25 @@ import pygal
 import requests
 import datetime
 import pandas as pd
-from getStockSymbol import getStockSymbol
-from getEndDate import getEndDate
+
+
+def getStockSymbol():
+
+    while True:
+
+        SpecialCharacters = False
+        userInput = input("\nInput a valid stock symbol: ")
+        if 0 < len(userInput) <= 5:  #checks if user inputs a string between 1 and 5 characters
+            for letter in userInput:
+                if not letter.isdigit() and not letter.isalpha(): #checks if letter isn't a number or a letter
+                    SpecialCharacters = True
+                    print("please input a symbol with no special characters")
+            if not SpecialCharacters:
+                break
+        else:
+            print("please input a symbol of 5 characters or less")
+
+    return userInput
 
 
 # Noah's chart function
@@ -23,7 +40,7 @@ def get_time_series():
 
 
 def get_beginning_date():
-    beginning_date = input("What is the beginning date of the data you want? (Use YYYY-MM-DD format): ")
+    beginning_date = input("\nWhat is the beginning date of the data you want? (Use YYYY-MM-DD format): ")
     try:
         begin_date = datetime.datetime.strptime(beginning_date, "%Y-%m-%d").date()
     except:
@@ -31,6 +48,23 @@ def get_beginning_date():
         return get_beginning_date()
 
     return begin_date
+
+
+def getEndDate(begin_date):
+    inputEndDate = input("\nWhat is the end date of the data you want? (Use YYYY-MM-DD format): ")
+    try:
+        endDate = datetime.datetime.strptime(inputEndDate, "%Y-%m-%d").date()
+    except:
+
+        print("Invalid date. Please try again.")
+        return getEndDate(begin_date)
+
+    if endDate <= begin_date:
+        print("Error: Start date cannot be later than end date (Beginning date is : " + str(begin_date) +
+              "). Please renter the end date.")
+        return getEndDate(begin_date)
+    else:
+        return endDate
 
 
 # json_to_dataframe()
@@ -162,7 +196,7 @@ def api_call(ss, ct, ts, bd, ed):
     data_json = r.json()
     # if api respone contains an error message, notify the user and return to main.
     if 'Error Message' in data_json:
-        print("\nThere was an error in your request, please try again.")
+        print("\nThere was an error in your request. Stock symbol '" + ss + "' does not exist.")
         return
     # transform json object to dataframe for easier processing into pygal
     data = json_to_dataframe(data_json, record_path)
@@ -199,11 +233,12 @@ def exit_prompt():
 # Author:
 #   Scrum Team 3
 if __name__ == "__main__":
+    print("\nStock Data Visualizer")
     # while loop allows for user to make multiple api calls in a single run of this program, user will be prompted if
     # the wish to continue after each call. if user indicates they wish to stop, break out of loop and end program
     while 1:
-        print("\nStock Data Visualizer\n===================================\n"
-              "Enter the stock symbol you are looking for\n")
+        print("===================================\n"
+              "Enter the stock symbol you are looking for")
         # get user inputs for stock symbol, chart type, and time series
         stock_symbol = getStockSymbol()
         # Noah's chart function is called
@@ -229,5 +264,6 @@ if __name__ == "__main__":
         api_call(stock_symbol, chart_type, time_series, begin_date, end_date)
         # prompt user for exit, if exit_prompt() returns 0, user wants to close program so break while loop
         # if anything other than 0 is returned then user wishes to run another api call, continue loop
+        print("===================================")
         if exit_prompt() == 0:
             break

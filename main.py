@@ -202,10 +202,13 @@ if __name__ == "__main__":
     # while loop allows for user to make multiple api calls in a single run of this program, user will be prompted if
     # the wish to continue after each call. if user indicates they wish to stop, break out of loop and end program
     while 1:
+        print("\nStock Data Visualizer\n===================================\n"
+              "Enter the stock symbol you are looking for\n")
         # get user inputs for stock symbol, chart type, and time series
         stock_symbol = getStockSymbol()
         # Noah's chart function is called
-        chart_type = get_chart_type(input("Enter the chart type you want (1, 2): "))
+        chart_type = get_chart_type(input("\nChart Types\n===================================\n"
+                                          "1.  Bar\n2.  Line\n\nEnter the chart type you want (1, 2): "))
         while chart_type == "0":
             chart_type = get_chart_type(input("Please enter the chart type you want (1, 2): "))
         time_series = get_time_series()

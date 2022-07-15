@@ -11,17 +11,19 @@ def get_stock_symbol():
 
 
 # Noah's chart function
-def get_chart_type(inp):
-    if inp == "1":
+def get_chart_type():
+    ct = input("\nEnter the chart type you want (1, 2): ")
+    if ct == "1":
         return "1"
-    elif inp == "2":
+    elif ct == "2":
         return "2"
     else:
-        return "0"
+        print("Error: Please choose from one of the provided options")
+        return get_chart_type()
 
 
 def get_time_series():
-    choice = input("Enter time series option(1,2,3,4): ")
+    choice = input("\nEnter time series option(1, 2, 3, 4): ")
     if choice == "1" or choice == "2" or choice == "3" or choice == "4":
         return choice
     else:
@@ -34,7 +36,7 @@ def get_beginning_date():
     try:
         beginning_date = datetime.datetime.strptime(beginning_date, "%Y-%m-%d").date()
     except (ValueError, Exception):
-        print("Invalid date. Please try again.")
+        print("Error: Invalid date. Please try again.")
         return get_beginning_date()
     return beginning_date
 
@@ -213,7 +215,7 @@ def exit_prompt():
         return 1
     else:
         # if anything other then a 'n' or 'y', call exit_prompt() again until a valid input is received
-        print("Invalid Value: please pick either 'y' or 'n'")
+        print("\nError: Error: Please choose from one of the provided options")
         return exit_prompt()
 
 
@@ -229,12 +231,11 @@ if __name__ == "__main__":
         # get user inputs for stock symbol, chart type, and time series
         stock_symbol = get_stock_symbol()
         # Noah's chart function is called
-        chart_type = get_chart_type(input("\nChart Types\n===================================\n"
-                                          "1.  Bar\n2.  Line\n\nEnter the chart type you want (1, 2): "))
-        while chart_type == "0":
-            chart_type = get_chart_type(input("Error: Please choose from one of the above options (1, 2): "))
+        print("\nChart Types\n===================================\n"
+              "1.  Line\n2.  Bar")
+        chart_type = get_chart_type()
         print("\nSelect the time Series of the chart you want to generate\n===================================\n"
-              "1. Intraday\n2. Daily\n3. Weekly\n4. Monthly\n")
+              "1. Intraday\n2. Daily\n3. Weekly\n4. Monthly")
         time_series = get_time_series()
         print('\nDate Range\n===================================\n')
         # depending on time series begin date and end date will differ
